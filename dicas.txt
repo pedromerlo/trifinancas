@@ -1,0 +1,89 @@
+Criaçao do projeto
+    Criação do composer.json através do composer
+    Editar  arquivo e apontar a carga do autoload
+    Carregar abtraves do terminal com o comando composer dumpautoload, criando a pasta vendor
+
+Instalação e integração com o phinx (robmorgam/phinx)
+    composer requier robmorgan/phinx:0.7.1
+    Criar as credencias de acesso ao banco de dados - criaçao da pasta config
+    Criação do arquivo db.php com as informações de acesso ao banco de dados
+
+Gerando a primeira migração
+    passagem dos parametro para o phinx pode ser efetuado por .json, .yml ou .php
+    criação das pastas para migrações e seeds
+    criar a primeira migração por linha de commando
+    cria o banco de dados e faz a migração via comando de linha
+    o comando rollback fazo migration DOWN
+
+Criação de seeders
+    vendor\bin\phinx seed:create CategoryCostsSeeder cria a classe em seeds
+
+Integração com o Faker
+    Geração de 10 entradas na tabela.
+
+Automação das ações de migração e seeders
+    migrate-seed.php
+
+Criação do esquele da aplicação
+
+01 - conceito de container de serviços
+     geração da interface ServiceContainerInterface
+
+02 - instalação do PIMPLE
+     composer require xtreamwayz/pimple-container-interop
+     Criação do container de serviço baseado na interface.
+
+03 - Criação da classe application
+
+04 - Criação de plugins (extensão de funcionalidades da classe ex. application)
+     Criação do plugin interface
+
+05 - Instalação do aura.router
+     Criação do RouterPuglin
+
+06 - COmbinador de rotas
+
+07 - Criação da pasta Public
+
+08 - Melhorias na rota
+
+09 - Emitindo resposta HTTP - zend/diactoros
+
+10 - Integração com o twig
+
+11 - serviço para renderizar templates
+
+12 -  Template para listar categorias de custos
+
+13 - Integrando Eloquent - (DB e persistência - integração de modelo com CRUD)
+
+14 - Criação do model para categorias
+
+15 - Criando categorias de custo
+
+16 - Melhorias em redirecionamento e paths
+
+17 - Edição de categorias
+
+18 - Exclusão de categorias
+
+19 - Organizando com controllers
+
+20 - Repositorios
+
+21 - refatorando model para repository
+
+22 -  Organizando formularios
+
+
+
+
+
+
+
+
+
+
+
+
+
