@@ -2,10 +2,9 @@
 use Psr\Http\Message\ServerRequestInterface;
 
 
-
-
 $app
     ->get('/category-costs', function () use($app){
+
         $view = $app->service('view.renderer');
         $repository = $app->service('category-costs.repository');
         $categories = $repository->all();

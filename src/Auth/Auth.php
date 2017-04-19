@@ -9,21 +9,54 @@
 namespace TRIFin\Auth;
 
 
+use TRIFin\Models\UserInterface;
+
 class Auth implements AuthInterface
 {
 
+    private $jasnyAuth;
+
+    /**
+     * Auth constructor.
+     */
+    public function __construct(JasnyAuth $jasnyAuth)
+    {
+        $this->jasnyAuth = $jasnyAuth;
+        $this->sessionStart();
+    }
+
     public function login(array $credencials): bool
     {
-        // TODO: Implement login() method.
+        list('email' => $email , 'password' => $password )= $credencials;
+        return $this->jasnyAuth->login($email, $password)!==null;
     }
 
     public function check(): bool
     {
-        // TODO: Implement check() method.
+
+        return $this->user()!=null;
     }
+
 
     public function logout(): void
     {
-        // TODO: Implement logout() method.
+        $this->jasnyAuth->logout();
+    }
+
+    public function hashPassword(string $password): string
+    {
+        return $this->jasnyAuth->hashPassword($password);
+    }
+
+    protected function sessionStart(){
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+
+}
+
+    public function user():?UserInterface
+    {
+       return $this->jasnyAuth->user();
     }
 }

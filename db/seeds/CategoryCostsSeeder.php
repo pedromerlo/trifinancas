@@ -14,6 +14,7 @@ class CategoryCostsSeeder extends AbstractSeed
      */
     public function run()
     {
+
         $faker= \Faker\Factory::create('pt_BR');
         $categoryCosts = $this->table('category_costs');
         $data=[];

@@ -39,5 +39,7 @@ interface RepositoryInterface
      * @param int $id
      * @return mixed
      */
-    public function find(int $id);
+    public function find(int $id, bool $failIfNotExist=true);
+
+    public function findByField(string $field, $value) ;
 }

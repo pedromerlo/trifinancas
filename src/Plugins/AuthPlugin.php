@@ -11,6 +11,7 @@ namespace TRIFin\Plugins;
 
 
 use Interop\Container\ContainerInterface;
+use TRIFin\Auth\jasnyAuth;
 use TRIFin\ServiceContainerInterface;
 use TRIFin\Auth\Auth;
 
@@ -27,8 +28,11 @@ class AuthPlugin implements PluginInterface
      */
     public function register(ServiceContainerInterface $container)
     {
+        $container->addLazy('jasny.auth', function (ContainerInterface $container){
+            return new jasnyAuth($container->get('user.repository'));
+        });
        $container->addLazy('auth', function (ContainerInterface $container){
-           return new Auth();
+           return new Auth($container->get('jasny.auth'));
        });
 
     }

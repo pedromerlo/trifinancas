@@ -3,7 +3,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 
 
-
 $app
     ->get('/login', function () use($app){
         $view = $app->service('view.renderer');
@@ -11,10 +10,21 @@ $app
     },'auth.show_login_form')
 
     ->post('/login', function (ServerRequestInterface $request) use($app){
-//        $repository = $app->service('category-costs.repository');
-//        $data = $request->getParsedBody();
-//        $repository->create($data);
-//        return $app->route('category-costs.list');
 
-    },'auth.login');
+        $view = $app->service('view.renderer');
 
+        $auth = $app->service('auth');
+        $data= $request->getParsedBody();
+        $result = $auth->login($data);
+        if(!$result){
+            return $view->render('auth/login.html.twig');
+        }
+
+        return $app->route('category-costs.list');
+
+    },'auth.login')
+
+    ->get('/logout', function () use($app){
+        $app->service('auth')->Logout();
+        return $app->route('auth.show_login_form');
+    },'auth.logout');
