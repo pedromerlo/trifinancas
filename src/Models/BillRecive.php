@@ -16,6 +16,7 @@ class BillRecive extends Model
     //Segurança na hidratação dos dados no modo massivo
     protected $fillable=[
         'date_launch',
+        'name',
         'value',
         'user_id'
     ];

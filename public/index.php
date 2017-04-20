@@ -14,8 +14,10 @@ use TRIFin\Plugins\RouterPlugin;
 use TRIFin\Plugins\ViewPlugin;
 use TRIFin\Plugins\DbPlugin;
 
+//autoload
 require_once __DIR__.'/../vendor/autoload.php';
-
+//helpers
+require_once __DIR__.'/../src/helpers.php';
 /* Container */
 $serviceContainer = new ServiceContainer();
 /* aplicação */
@@ -42,7 +44,7 @@ $app->get('/home/{name}', function (ServerRequestInterface $request){
 require_once __DIR__.'/../src/controllers/category-costs.php';
 require_once __DIR__.'/../src/controllers/users.php';
 require_once __DIR__.'/../src/controllers/auth.php';
-
+require_once __DIR__.'/../src/controllers/bill-recives.php';
 
 
 $app->start();
