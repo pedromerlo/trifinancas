@@ -55,9 +55,11 @@ class DefaultRepository implements RepositoryInterface
      * @param array $data
      * @return mixed
      */
-    public function update(int $id, array $data)
+    public function update($id, array $data)
     {
-        $model = $this->model->findOrFail($id);
+
+        $model= $this->findInternal($id);
+
         $model->fill($data);
         $model->save();
         return $model;
@@ -67,9 +69,9 @@ class DefaultRepository implements RepositoryInterface
      * @param int $id
      * @return mixed
      */
-    public function delete(int $id)
+    public function delete($id)
     {
-        $model = $this->model->findOrFail($id);
+        $model= $this->findInternal($id);
         $model->delete();
     }
 
@@ -85,5 +87,22 @@ class DefaultRepository implements RepositoryInterface
     public function findByField(string $field, $value)
     {
       return $this->model->where($field,'=', $value)->get() ;
+    }
+
+    /**
+     * @param array $search
+     * @return mixed
+     */
+    public function findOneBy(array $search)
+    {
+        $queryBuilder = $this->model;
+        foreach ($search as $field =>$value){
+            $queryBuilder=$queryBuilder->where($field,'=',$value);
+        }
+        return $queryBuilder->firstOrFail();
+    }
+
+    protected function findInternal($id){
+       return is_array($id)? $this->findOneBy($id): $this->model->find($id) ;
     }
 }

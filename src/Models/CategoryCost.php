@@ -15,6 +15,7 @@ class CategoryCost extends Model
 {
     //Segurança na hidratação dos dados no modo massivo
     protected $fillable=[
-        'name'
+        'name',
+        'user_id'
     ];
 }

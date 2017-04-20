@@ -19,6 +19,7 @@ use Zend\Diactoros\Response\SapiEmitter;
 class Application
 {
     private $serviceContainer;
+    private $befores=[];
 
     /**
      * Application constructor.
@@ -43,7 +44,8 @@ class Application
      * @param string $name
      * @param $service
      */
-    public function addService(string  $name, $service):void {
+    public function addService(string  $name, $service):void
+    {
         if(is_callable($service)){
             $this->serviceContainer->addLazy($name, $service);
         }else{
@@ -54,7 +56,8 @@ class Application
     /**
      * @param PluginInterface $plugin
      */
-    public function plugin(PluginInterface $plugin):void {
+    public function plugin(PluginInterface $plugin):void
+    {
         $plugin->register($this->serviceContainer);
 
     }
@@ -83,18 +86,44 @@ class Application
         return $this;
     }
 
-    public function redirect($path){
+    public function redirect($path):ResponseInterface
+    {
+        '<pre>'.var_dump($path).'</pre>';
         return new RedirectResponse($path);
     }
 
-    public function route(string $name, array $params =[]){
+    public function route(string $name, array $params =[]):ResponseInterface
+    {
+
         //Sobrescrer o twig para gerar a função de geração de rotas
         $generator = $this->service('routing.generator');
         $path = $generator->generate($name , $params);
+
         return $this->redirect($path);
     }
 
-    public function start(){
+
+    public function before(callable $callback):Application
+    {
+        array_push($this->befores, $callback);
+        return $this;
+    }
+
+
+    protected function runBefores(): ?ResponseInterface
+    {
+        foreach ($this->befores as $callback){
+            $result = $callback($this->service(RequestInterface::class));
+            if($result instanceof ResponseInterface){
+                return $result;
+            }
+        }
+        return null;
+    }
+
+
+    public function start():void
+    {
         $route = $this->service('route');
 
         /** @var ServerRequestInterface $request */
@@ -110,13 +139,19 @@ class Application
         foreach ($route->attributes as $key =>$value){
             $request = $request->withAttribute($key, $value);
         }
-
+        $result = $this->runBefores();
+        if($result){
+            $this->emitResponse($result);
+            return;
+        }
         $callable = $route->handler;
         $response =  $callable($request);
         $this->emitResponse($response);
     }
 
-    protected function emitResponse(ResponseInterface $response)
+
+
+    protected function emitResponse(ResponseInterface $response):void
     {
         $emitter = new SapiEmitter();
         $emitter->emit($response);
