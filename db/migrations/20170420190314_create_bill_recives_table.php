@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateBillReciveTable extends AbstractMigration
+class CreateBillRecivesTable extends AbstractMigration
 {
 
     public function up(){

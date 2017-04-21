@@ -12,4 +12,5 @@ exec(__DIR__.'/vendor/bin/phinx migrate');
 exec(__DIR__.'/vendor/bin/phinx seed:run -s UsersSeeder');
 exec(__DIR__.'/vendor/bin/phinx seed:run -s CategoryCostsSeeder');
 exec(__DIR__.'/vendor/bin/phinx seed:run -s BillRecivesSeeder');
+exec(__DIR__.'/vendor/bin/phinx seed:run -s BillPaysSeeder');
 echo ("Migração finalizada com exito......");

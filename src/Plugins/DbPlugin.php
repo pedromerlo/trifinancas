@@ -14,6 +14,7 @@ use Aura\Router\RouterContainer;
 
 
 use Interop\Container\ContainerInterface;
+use TRIFin\Models\BillPay;
 use TRIFin\Models\BillRecive;
 use TRIFin\Models\CategoryCost;
 use TRIFin\Models\User;
@@ -45,8 +46,9 @@ class DbPlugin implements PluginInterface
         $container->addLazy('bill-recives.repository',function (ContainerInterface $container ){
             return $container->get('repository.factory')->factory(BillRecive::class);
         });
-
-
+        $container->addLazy('bill-pays.repository',function (ContainerInterface $container ){
+            return $container->get('repository.factory')->factory(BillPay::class);
+        });
         $container->addLazy('user.repository',function (ContainerInterface $container ){
             return $container->get('repository.factory')->factory(User::class);
         });
